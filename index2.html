@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Dimas Tersayang ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cormorant+Garamond:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fdfbf7;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Latar Belakang Partikel Canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: #f6efe8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .flower-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flower {
+            font-size: 70px;
+            animation: spin 8s linear infinite;
+        }
+
+        .heart-pulse {
+            position: absolute;
+            font-size: 25px;
+            animation: pulseHeart 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .loading-text {
+            margin-top: 25px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #7a6358;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .progress-container {
+            width: 220px;
+            height: 4px;
+            background: rgba(92, 67, 56, 0.08);
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #9d6b76, #5c4338);
+            border-radius: 10px;
+            transition: width 0.1s linear;
+        }
+
+        /* Container Utama */
+        .container {
+            opacity: 0;
+            display: none;
+            padding: 20px;
+            width: 100%;
+            max-width: 480px;
+            z-index: 2;
+            transition: opacity 0.5s ease;
+        }
+
+        .card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 32px;
+            box-shadow: 0 25px 55px rgba(92, 67, 56, 0.1);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .chapter {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #b5a397;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .title {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #9d6b76;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+
+        .text-box {
+            min-height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .text {
+            font-family: "Caveat", cursive;
+            font-size: 28px;
+            line-height: 1.5;
+            color: #3a3a3a;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: #9d6b76;
+            margin-left: 3px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .btn {
+            background: #5c4338;
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            width: 100%;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 20px rgba(92, 67, 56, 0.15);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: #4a352c;
+            transform: translateY(-2px);
+        }
+
+        .btn:active { transform: translateY(1px); }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 25px;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            background: #e6deda;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #9d6b76;
+            width: 22px;
+            border-radius: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 130px;
+            border: 1px solid #e8e2dc;
+            background: #faf8f5;
+            border-radius: 18px;
+            padding: 18px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            margin: 15px 0 10px;
+        }
+
+        textarea:focus {
+            background: #fff;
+            border-color: #9d6b76;
+        }
+
+        .reply-card {
+            background: #faf6f3;
+            padding: 22px;
+            border-radius: 18px;
+            margin: 20px 0;
+            border-left: 4px solid #9d6b76;
+            text-align: left;
+        }
+
+        .reply-card h3 {
+            font-size: 12px;
+            color: #9d6b76;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .reply-card p {
+            font-size: 16px;
+            color: #444;
+            line-height: 1.6;
+            font-style: italic;
+            white-space: pre-wrap;
+        }
+
+        .music {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 46px;
+            height: 46px;
+            border: none;
+            border-radius: 50%;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .music.playing { animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(157, 107, 118, 0.3); }
+            70% { box-shadow: 0 0 0 12px rgba(157, 107, 118, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(157, 107, 118, 0); }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <div id="loading">
+        <div class="flower-wrapper">
+            <div class="flower">🌸</div>
+            <div class="heart-pulse">❤️</div>
+        </div>
+        <div class="loading-text">bentar ya sayang...</div>
+        <div class="progress-container">
+            <div class="bar" id="bar"></div>
+        </div>
+    </div>
+
+    <div class="container" id="container">
+        <div class="card" id="mainCard">
+            
+            <div id="contentSection">
+                <div class="chapter" id="chapter">-</div>
+                <div class="title" id="title">-</div>
+                <div class="text-box">
+                    <p class="text"><span id="typewriter"></span><span class="cursor" id="cursor">|</span></p>
+                </div>
+                <button class="btn" id="nextBtn" onclick="nextPage()">
+                    <span id="btnText">Lanjut</span> ❤️
+                </button>
+                <div class="dots" id="dotsContainer"></div>
+            </div>
+
+            <div id="replySection1" class="hidden">
+                <div class="title">apa yang kamu pikirin tentang semua itu?</div>
+                <p style="color: #777; font-size: 13px;">tulis hati kamu disini.</p>
+                <textarea id="reply1" placeholder="Tuliskan isi hatimu di sini..."></textarea>
+                <button class="btn" onclick="submitFirstReply()">send</button>
+            </div>
+
+            <div id="replySection2" class="hidden">
+                <div class="title">jadi?aku masi kurang apa di pov kamu?</div>
+                <p style="color: #777; font-size: 13px;">tulis hati kamu disini.</p>
+                <textarea id="reply2" placeholder="Tuliskan isi hatimu di sini..."></textarea>
+                <button class="btn" id="finalSendBtn" onclick="showReply()">send</button>
+            </div>
+
+            <div id="resultSection" class="hidden">
+                <div class="title">Terima Kasih Banyak ❤️</div>
+                <div class="reply-card">
+                    <h3>Balasanmu Berhasil Disalin:</h3>
+                    <p id="replyResult"></p>
+                </div>
+                <button class="btn" onclick="copyReplyOnly()">Salin Ulang Pesan</button>
+            </div>
+
+        </div>
+    </div>
+
+    <button class="music" id="musicBtn" onclick="toggleMusic()">🎵</button>
+    <audio id="bgmusic" loop>
+    <source src="file:///C:/Users/LENOVO/Downloads/The Lantis - Bunga Maaf Visualizer.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        // ⚠️ MASUKKAN LINK ENDPOINT FORMSPREE KAMU DI SINI
+        const FORMSPREE_ENDPOINT = "https://formspree.io/f/xaqgwogj";
+
+        const pages = [
+            {
+                chapter: "chat yang mau aku jelasin",
+                title: "sayang..",
+                text: "aku kangenn",
+                btnText: "Tap chat sebenarnya"
+            },
+            {
+                chapter: "Yang aku omongin sebenarnya",
+                title: "yang sebenernya",
+                text: "beribu kali aku bilang ini ke kamu, aku tahu mungkin kamu bisa bosen. Tapi aku gak bisa cuma diem mikirin kamu terus, hati aku selalu khawatir.kamu dimana?sama siapa?lagi apa?kepala aku penuh itu semua",
+                btnText: "iya, aku ngerti"
+            },
+            {
+                chapter: "chat yang mau aku jelasin",
+                title: "sayang..",
+                text: "aku cape? aku marah?",
+                btnText: "tap chat sebenarnya"
+            },
+            {
+                chapter: "yang aku omongin sebenarnya",
+                title: "yang sebenernya",
+                text: "fun factnya mau gimanapun sikap kamu ke aku, aku selalu sabar, aku selalu tenang, yang mungkin kalo bukan aku orangnya dia bakalan marah ke kamu. but why?karna aku sayang kamu lebih dari ego aku dan aku engga mau kamu insecure tentang diri kamu lagi",
+                btnText: "iya, aku ngerti"
+            },
+            {
+                chapter: "chat yang mau aku jelasin",
+                title: "sayang..",
+                text: "ketemu yuk",
+                btnText: "Tap chat sebenarnya"
+            },
+            {
+                chapter: "yang sebenernya mau aku omongin",
+                title: "yang sebenernya",
+                text: "tau engga why aku selalu ngebet ketemu kamu?bahkan aku mau nyusul kamu? karna menurut aku kita sweet kalo ketemu, kita sama-sama excited, aku tau ekspresi kamu,aku ngeliat cara kamu nyayangin aku, kamu seakan punya aku seutuhnya.",
+                btnText: "iya,aku ngerti"
+            },
+            {
+                chapter: "chat yang mau aku jelasin",
+                title: "sayang..",
+                text: "aku kurang apa?",
+                btnText: "Tap chat sebenarnya"
+            },
+            {
+                chapter: "yang aku omongin sebenarnya",
+                title: "yang sebenernya",
+                text: "why aku selalu tanya ini?karna aku takut..mungkin dipikiran aku uda perfect tapi di pov kamu beda. aku engga mau ngecewain kamu di hal apapun, dan aku akan berusaha untuk kamu apapun itu begitupun sebaliknya.",
+                btnText: "iya aku ngerti"
+            },
+            {
+                chapter: "sedikit hati aku-1",
+                title: "komunikasi",
+                text: "aku ngertiin waktu kamu ambil space, dan aku engga akan nuntut kamu cepet-cepet hubungin aku lagi. why?aku engga mau kamu hubungin aku kepaksa dan masi di emosi kamu, aku mau kamu hubungi aku waktu bener-bener kamu mau.",
+                btnText: "aku udah baca bagian ini,lanjut ya"
+            },
+            {
+                chapter: "sedikit hati aku-2",
+                title: "yang aku pengen",
+                text: "aku pengen kita bisa ketemu, ada banyak hal yang aku mau omongin ke kamu dan ada banyak hal yang mau aku lakuin sama kamu. aku mau peluk kamu,aku mau cium kamu, aku mau mainin rambut kamu, aku mau liat wajah kamu, dan ya walau engga ketemu aku mau call sama kamu lagi karna aku suka suara kamu. karna kamu rumah aku",
+                btnText: "lanjut"
+            },
+            {
+                chapter: "sedikit hati aku-3",
+                title: "ketakutan aku",
+                text: "aku takut kamu terbiasa tanppa aku...aku takut...aku engga masalah people come and go,asalkan bukan kamu orangnya",
+                btnText: "lanjut Lagi"
+            },
+            {
+                chapter: "sedikit hati aku-4",
+                title: "harapan aku",
+                text: "simple, kita bisa saling sayang sampe akhir aku, kita bisa call an lagi kaya biasanya, kamu selalu kirim pap,chat,stiker,emot dimanapun dan kapanpun itu dan sebaliknya",
+                btnText: "lanjut"
+            },
+            {
+                chapter: "sedikit hati aku-5",
+                title: "sayang..",
+                text: "jangan pernah lupain aku pasangan kamu yang bakal selalu ada disini walaupun kamu lagi marah sama aku, aku minta maaf aku bikin kamu marah sayang ",
+                btnText: "iya"
+            },
+        ];
+
+        let current = 0;
+        let typewriterIndex = 0;
+        let typewriterTimeout;
+        let jawaban1 = "";
+        
+        const music = document.getElementById("bgmusic");
+        const musicBtn = document.getElementById("musicBtn");
+        const typewriterElement = document.getElementById("typewriter");
+        const cursorElement = document.getElementById("cursor");
+        const bar = document.getElementById("bar");
+
+        const DURATION = 3000;
+        let startTime = null;
+
+        function animateLoading(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min((elapsed / DURATION) * 100, 100);
+            
+            bar.style.width = progress + "%";
+            
+            if (elapsed < DURATION) {
+                requestAnimationFrame(animateLoading);
+            } else {
+                document.getElementById("loading").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("loading").classList.add("hidden");
+                    const container = document.getElementById("container");
+                    container.style.display = "block";
+                    requestAnimationFrame(() => container.style.opacity = "1");
+                    setupDots();
+                    renderPage();
+                    playMusic();
+                }, 500);
+            }
+        }
+        requestAnimationFrame(animateLoading);
+
+        const canvas = document.getElementById("particleCanvas");
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 10 + 5;
+                this.speed = Math.random() * 1 + 0.5;
+                this.opacity = Math.random() * 0.4 + 0.2;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = "#9d6b76";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+            update() {
+                this.y -= this.speed;
+                if (this.y < -10) {
+                    this.y = canvas.height + 10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+        }
+
+        for (let i = 0; i < 20; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        requestAnimationFrame(animateParticles);
+
+        function setupDots() {
+            const container = document.getElementById("dotsContainer");
+            container.innerHTML = "";
+            pages.forEach((_, i) => {
+                const dot = document.createElement("div");
+                dot.className = `dot ${i === 0 ? 'active' : ''}`;
+                container.appendChild(dot);
+            });
+        }
+
+        function typeWriter(text) {
+            if (typewriterIndex < text.length) {
+                typewriterElement.innerHTML += text.charAt(typewriterIndex);
+                typewriterIndex++;
+                cursorElement.style.display = "inline-block";
+                typewriterTimeout = setTimeout(() => typeWriter(text), 40);
+            } else {
+                cursorElement.style.display = "none";
+            }
+        }
+
+        function renderPage() {
+            clearTimeout(typewriterTimeout);
+            typewriterElement.innerHTML = "";
+            typewriterIndex = 0;
+
+            document.getElementById("chapter").innerText = pages[current].chapter;
+            document.getElementById("title").innerText = pages[current].title;
+            document.getElementById("btnText").innerText = pages[current].btnText;
+
+            typeWriter(pages[current].text);
+
+            const dots = document.querySelectorAll(".dot");
+            dots.forEach((dot, i) => dot.classList.toggle("active", i === current));
+        }
+
+        function nextPage(){
+            if (music.paused) playMusic();
+
+            if (typewriterIndex < pages[current].text.length) {
+                clearTimeout(typewriterTimeout);
+                typewriterElement.innerHTML = pages[current].text;
+                typewriterIndex = pages[current].text.length;
+                cursorElement.style.display = "none";
+                return;
+            }
+
+            current++;
+            if(current < pages.length){
+                renderPage();
+            } else {
+                document.getElementById("contentSection").classList.add("hidden");
+                document.getElementById("replySection1").classList.remove("hidden");
+            }
+        }
+
+        // Simpan jawaban pertama & buka pertanyaan kedua
+        function submitFirstReply() {
+            const replyBox1 = document.getElementById("reply1");
+            const card = document.getElementById("mainCard");
+
+            if(replyBox1.value.trim() == ""){
+                card.classList.add("shake");
+                setTimeout(() => card.classList.remove("shake"), 400);
+                alert("Tulis balasannya dulu yuk sayang... ❤️");
+                return;
+            }
+
+            jawaban1 = replyBox1.value;
+            document.getElementById("replySection1").classList.add("hidden");
+            document.getElementById("replySection2").classList.remove("hidden");
+        }
+
+        // Ambil jawaban kedua, kirim otomatis di latar belakang, lalu tampilkan halaman sukses
+        function showReply(){
+            const replyBox2 = document.getElementById("reply2");
+            const text2 = replyBox2.value;
+            const card = document.getElementById("mainCard");
+            const finalBtn = document.getElementById("finalSendBtn");
+
+            if(text2.trim() == ""){
+                card.classList.add("shake");
+                setTimeout(() => card.classList.remove("shake"), 400);
+                alert("Tulis balasannya dulu yuk sayang... ❤️");
+                return;
+            }
+
+            finalBtn.disabled = true;
+            finalBtn.innerText = "Mengirim...";
+
+            const gabunganPesan = `Pertanyaan 1:\n${jawaban1}\n\nPertanyaan 2:\n${text2}`;
+
+            // Kirim otomatis menggunakan Fetch API di latar belakang (tanpa mengubah visual)
+            fetch(FORMSPREE_ENDPOINT, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    Nama: "Dimas",
+                    Balasan: gabunganPesan
+                })
+            })
+            .then(() => {
+                lanjutKeHalamanSukses(gabunganPesan);
+            })
+            .catch((err) => {
+                console.log("Error mengirim:", err);
+                // Tetap jalankan halaman sukses agar Dimas tidak curiga jika jaringan lambat
+                lanjutKeHalamanSukses(gabunganPesan);
+            });
+        }
+
+        function lanjutKeHalamanSukses(teksLengkap) {
+            document.getElementById("replyResult").innerText = teksLengkap;
+            navigator.clipboard.writeText(teksLengkap);
+
+            document.getElementById("replySection2").classList.add("hidden");
+            document.getElementById("resultSection").classList.remove("hidden");
+        }
+
+        function copyReplyOnly() {
+            let text = document.getElementById("replyResult").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Berhasil disalin ulang!");
+            });
+        }
+
+        function playMusic() {
+            music.play().then(() => {
+                musicBtn.classList.add("playing");
+            }).catch(() => {});
+        }
+
+        function toggleMusic(){
+            if(music.paused){
+                music.play();
+                musicBtn.classList.add("playing");
+            } else {
+                music.pause();
+                musicBtn.classList.remove("playing");
+            }
+        }
+    </script>
+</body>
+</html>
